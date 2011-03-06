@@ -1899,11 +1899,13 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
 
     // Let the IME process key events
     IM_INPUT_INSERT = NO;
+    doCommandBySelectorCalled = NO;
     [self interpretKeyEvents:[NSArray arrayWithObject:event]];
 
     // If the IME didn't want it, pass it on to the delegate
     if (!prev &&
         !IM_INPUT_INSERT &&
+        doCommandBySelectorCalled &&
         ![self hasMarkedText]) {
         [delegate keyDown:event];
     }
@@ -3371,6 +3373,7 @@ static double EuclideanDistance(NSPoint p1, NSPoint p2) {
 /// NSTextInput stuff
 - (void)doCommandBySelector:(SEL)aSelector
 {
+    doCommandBySelectorCalled = YES;
     //NSLog(@"doCommandBySelector:%@", NSStringFromSelector(aSelector));
 
 #if GREED_KEYDOWN == 0
