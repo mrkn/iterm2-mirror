@@ -1430,7 +1430,7 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
         numRules = [rulesArray count];
         //NSLog(@"Loaded %d smart selection rules", numRules);
     }
-    
+
     NSMutableDictionary* matches = [NSMutableDictionary dictionaryWithCapacity:13];
     int numCoords = [coords count];
 
@@ -2179,16 +2179,14 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
         int t;
         t = startY; startY = endY; endY = t;
         t = startX; startX = endX; endX = t;
-    } else if ([mouseDownEvent locationInWindow].x == [event locationInWindow].x &&
-               [mouseDownEvent locationInWindow].y == [event locationInWindow].y &&
+    } else if (abs([mouseDownEvent locationInWindow].x - [event locationInWindow].x) < 3 &&
+               abs([mouseDownEvent locationInWindow].y - [event locationInWindow].y) < 3 &&
                [event clickCount] < 2 &&
                !mouseDragged) {
         // Just a click in the window.
         startX=-1;
         if (([event modifierFlags] & NSCommandKeyMask) &&
-            [[PreferencePanel sharedInstance] cmdSelection] &&
-            [mouseDownEvent locationInWindow].x == [event locationInWindow].x &&
-            [mouseDownEvent locationInWindow].y == [event locationInWindow].y) {
+            [[PreferencePanel sharedInstance] cmdSelection]) {
             // Command click in place.
             NSString *url = [self _getURLForX:x y:y];
 
@@ -2253,6 +2251,14 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
 
     y = locationInTextView.y / lineHeight;
 
+    NSPoint mouseDownLocation = [mouseDownEvent locationInWindow];
+
+    // Prevent accidental dragging
+    if (abs(mouseDownLocation.x - locationInWindow.x) < 3 ||
+        abs(mouseDownLocation.y - locationInWindow.y) < 3) {
+        return;
+    }
+
     if (([[self delegate] xtermMouseReporting]) &&
         reportingMouseDown &&
         !([event modifierFlags] & NSAlternateKeyMask)) {
@@ -2312,7 +2318,7 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
         path = [trouter getFullPath:path
                    workingDirectory:[self getWorkingDirectoryAtLine:y + 1]
                          lineNumber:nil];
-        if (![[trouter fileManager] fileExistsAtPath:path]) {
+        if (path == nil) {
             return;
         }
 
@@ -2825,21 +2831,14 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
                     // Just paste the file names into the shell after escaping special characters.
                     if ([delegate respondsToSelector:@selector(pasteString:)])
                     {
-                        NSMutableString *aMutableString;
+                        NSMutableString *path;
 
-                        aMutableString = [[NSMutableString alloc] initWithString: (NSString*)[propertyList objectAtIndex: i]];
+                        path = [[NSMutableString alloc] initWithString:(NSString*)[propertyList objectAtIndex: i]];
+
                         // get rid of special characters
-                        [aMutableString replaceOccurrencesOfString: @"\\" withString: @"\\\\" options: 0 range: NSMakeRange(0, [aMutableString length])];
-                        [aMutableString replaceOccurrencesOfString: @" " withString: @"\\ " options: 0 range: NSMakeRange(0, [aMutableString length])];
-                        [aMutableString replaceOccurrencesOfString: @"(" withString: @"\\(" options: 0 range: NSMakeRange(0, [aMutableString length])];
-                        [aMutableString replaceOccurrencesOfString: @")" withString: @"\\)" options: 0 range: NSMakeRange(0, [aMutableString length])];
-                        [aMutableString replaceOccurrencesOfString: @"\"" withString: @"\\\"" options: 0 range: NSMakeRange(0, [aMutableString length])];
-                        [aMutableString replaceOccurrencesOfString: @"&" withString: @"\\&" options: 0 range: NSMakeRange(0, [aMutableString length])];
-                        [aMutableString replaceOccurrencesOfString: @"'" withString: @"\\'" options: 0 range: NSMakeRange(0, [aMutableString length])];
-
-                        [delegate pasteString: aMutableString];
-                        [delegate pasteString: @" "];
-                        [aMutableString release];
+                        [delegate pasteString:[path stringWithEscapedShellCharacters]];
+                        [delegate pasteString:@" "];
+                        [path release];
                     }
 
                 }
@@ -5656,9 +5655,10 @@ static bool IsUrlChar(NSString* str)
 
 - (void)logWorkingDirectoryAtLine:(long long)line
 {
+    NSString *workingDirectory = [[dataSource shellTask] getWorkingDirectory];
     [workingDirectoryAtLines addObject:[NSArray arrayWithObjects:
           [NSNumber numberWithLongLong:line],
-          [[dataSource shellTask] getWorkingDirectory],
+          workingDirectory,
           nil]];
     if ([workingDirectoryAtLines count] > MAX_WORKING_DIR_COUNT) {
         [workingDirectoryAtLines removeObjectAtIndex:0];
