@@ -464,7 +464,9 @@ static NSString* SESSION_ARRANGEMENT_WORKING_DIRECTORY = @"Working Directory";
 
 - (void)terminate
 {
-    [self _maybeWarnAboutShortLivedSessions];
+    if (EXIT) {
+        [self _maybeWarnAboutShortLivedSessions];
+    }
     // deregister from the notification center
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
@@ -799,7 +801,7 @@ static NSString* SESSION_ARRANGEMENT_WORKING_DIRECTORY = @"Working Directory";
 
 
     unsigned short keycode = [event keyCode];
-    NSLog([NSString stringWithFormat:@"event:%@ (%x+%x)[%@][%@]:%x(%c) <%d>", event,modflag,keycode,keystr,unmodkeystr,unicode,unicode,(modflag & NSNumericPadKeyMask)]);
+    //NSLog([NSString stringWithFormat:@"event:%@ (%x+%x)[%@][%@]:%x(%c) <%d>", event,modflag,keycode,keystr,unmodkeystr,unicode,unicode,(modflag & NSNumericPadKeyMask)]);
     DebugLog([NSString stringWithFormat:@"event:%@ (%x+%x)[%@][%@]:%x(%c) <%d>", event,modflag,keycode,keystr,unmodkeystr,unicode,unicode,(modflag & NSNumericPadKeyMask)]);
 
     // Check if we have a custom key mapping for this event
