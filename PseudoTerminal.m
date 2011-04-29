@@ -978,7 +978,9 @@ NSString *sessionsKey = @"sessions";
     // svn history for the old impl.
 
     // update the cursor
-    [[[self currentSession] TEXTVIEW] refresh];
+    if ([[[self currentSession] TEXTVIEW] refresh]) {
+        [[self currentSession] scheduleUpdateIn:kBlinkTimerIntervalSec];
+    }
     [[[self currentSession] TEXTVIEW] setNeedsDisplay:YES];
     [self _loadFindStringFromSharedPasteboard];
 }
@@ -1212,8 +1214,8 @@ NSString *sessionsKey = @"sessions";
                         [self currentSessionName],
                         [session columns],
                         [session rows]];
-    [self setWindowTitle:aTitle];
     tempTitle = YES;
+    [self setWindowTitle:aTitle];
     [self fitTabsToWindow];
 
     // Post a notification
