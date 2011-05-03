@@ -4005,14 +4005,14 @@ NSString *sessionsKey = @"sessions";
 
 -(id)addNewSession:(NSDictionary *)addressbookEntry
 {
-    NSAssert(addressbookEntry, @"Null address book entry");
-    // NSLog(@"PseudoTerminal: -addInSessions: 0x%x", object);
+    assert(addressbookEntry);
     PTYSession *aSession;
     NSString *oldCWD = nil;
 
-    /* Get active session's directory */
-    if ([self currentSession]) {
-        oldCWD = [[[self currentSession] SHELL] getWorkingDirectory];
+    // Get active session's directory
+    PTYSession* cwdSession = [[[iTermController sharedInstance] currentTerminal] currentSession];
+    if (cwdSession) {
+        oldCWD = [[cwdSession SHELL] getWorkingDirectory];
     }
 
     // Initialize a new session
