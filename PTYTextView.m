@@ -1120,7 +1120,7 @@ static BOOL RectsEqual(NSRect* a, NSRect* b) {
     if ([attribute isEqualToString:NSAccessibilityRoleAttribute]) {
         return NSAccessibilityTextAreaRole;
     } else if ([attribute isEqualToString:NSAccessibilityRoleDescriptionAttribute]) {
-        return NSAccessibilityRoleDescription(NSAccessibilityTextAreaRole);
+        return NSAccessibilityRoleDescriptionForUIElement(NSAccessibilityTextAreaRole);
     } else if ([attribute isEqualToString:NSAccessibilityHelpAttribute]) {
         return nil;
     } else if ([attribute isEqualToString:NSAccessibilityFocusedAttribute]) {
