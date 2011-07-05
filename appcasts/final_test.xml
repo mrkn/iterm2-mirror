@@ -10,10 +10,10 @@
                         <sparkle:releaseNotesLink>
                                 http://iterm2.googlecode.com/svn/trunk/appcasts/full_changes.html
                         </sparkle:releaseNotesLink>
-                        <pubDate>Mon, 04 Jul 2011 22:06:18 -0700</pubDate>
+                        <pubDate>Mon, 04 Jul 2011 22:13:23 -0700</pubDate>
                         <enclosure url="http://iterm2.googlecode.com/files/iTerm2-1.0.0.zip"
-                                sparkle:version="1.0.0" length="3782758" type="application/octet-stream"
-                                sparkle:dsaSignature="MCwCFGzzWNUt+lXAuAO6Jg5/QNDmxxG/AhQFzlWhLi66t/i85uBWWQGV6K927Q==" />
+                                sparkle:version="1.0.0" length="3782912" type="application/octet-stream"
+                                sparkle:dsaSignature="MCwCFBhIMLL14vbNv2Jo2u8ehCskfnT3AhROG6yp3Hf88JMMFHiwsAlwR0r88Q==" />
                 </item>
 	</channel>
 </rss>
