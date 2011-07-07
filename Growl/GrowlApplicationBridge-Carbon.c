@@ -284,7 +284,7 @@ void Growl_PostNotificationWithDictionary(CFDictionaryRef userInfo) {
 
 			CFRelease(userInfo);
 		}
-#endif GROWL_WITH_INSTALLER
+#endif //GROWL_WITH_INSTALLER
 	}
 }
 
