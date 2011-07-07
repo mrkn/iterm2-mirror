@@ -1638,7 +1638,6 @@
 				ARCHS = (
 					i386,
 					x86_64,
-					ppc,
 				);
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1659,7 +1658,6 @@
 				ARCHS = (
 					i386,
 					x86_64,
-					ppc,
 				);
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				GCC_VERSION = 4.0;
