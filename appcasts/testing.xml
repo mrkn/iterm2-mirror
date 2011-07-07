@@ -11,9 +11,9 @@
                                 http://iterm2.googlecode.com/svn/trunk/appcasts/testing_changes.html
                         </sparkle:releaseNotesLink>
                         <pubDate>Wed, 06 Jul 2011 18:31:03 -0700</pubDate>
-                        <enclosure url="http://iterm2.googlecode.com/files/iTerm2-1.0.0.zip"
+                        <enclosure url="http://iterm2.googlecode.com/files/iTerm2_v1_0_0.zip"
                                 sparkle:version="1.0.0" length="3784539" type="application/octet-stream"
-                                sparkle:dsaSignature="MC0CFQCLG1szfhj7akJMaTxAWILl3UmBGgIUY1ttLWAOeU1OD8LfQFFaeVkeNKs=" />
+                                sparkle:dsaSignature="MCwCFFKI7jx/ab/XCtvybMC5RV4iAiliAhQ3hUU4Zce1bREsdHzS+maHg+HqsQ==" />
                 </item>
 	</channel>
 </rss>
