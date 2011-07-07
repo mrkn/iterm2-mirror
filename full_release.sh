@@ -17,7 +17,7 @@ sed -e "s/%BUGVER%/${BUGVERSION}/" | \
 sed -e "s/%DATE%/${DATE}/" | \
 sed -e "s/%NAME%/${NAME}/" | \
 sed -e "s/%LENGTH%/$LENGTH/" |
-sed -e "s,%SIG%,${SIG}," > ../../appcasts/final_test.xml
+sed -e "s,%SIG%,${SIG}," > ../../appcasts/final.xml
 echo "Go upload the iTerm2-${NAME}.zip, then run:"
 echo "svn commit -m $NAME"
 echo "cd .. && trunk/release2.sh $NAME"
